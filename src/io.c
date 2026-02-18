@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <string.h>
-#include "input.h"
+#include "io.h"
 
 int read_input(char *buffer)
 {
