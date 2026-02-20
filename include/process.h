@@ -2,6 +2,6 @@
 #define PROCESS_H
 
 char **split_line(char *line, int *argc);
-int execute(int argc, char **args);
+int execute(char **args);
 
 #endif

@@ -23,7 +23,7 @@ int main(void)
         }
 
         args = split_line(input, &argc);
-        status = execute(argc, args);
+        status = execute(args);
 
         free(args);
     } while (!status);

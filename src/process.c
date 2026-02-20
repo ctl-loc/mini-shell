@@ -6,6 +6,7 @@
 #include <unistd.h>
 
 #include "process.h"
+#include "builtin.h"
 #include "io.h"
 
 #define ARGS_BUFSIZE 64
@@ -74,7 +75,7 @@ int launch_proc(char **args)
         {
             // wait for the child to finish
             wpid = waitpid(pid, &status, WUNTRACED);
-            printf("pid: %d\n", wpid);
+            printf("Process complete: %d\n", wpid);
         } while (!WIFEXITED(status) && !WIFSIGNALED(status)); // child exited normally or was killed by a signal
     }
     else
@@ -86,8 +87,17 @@ int launch_proc(char **args)
     return 1;
 }
 
-int execute(int argc, char **args)
+int execute(char **args)
 {
-    launch_proc(args);
-    return 0;
+    // check if command is builtin
+    for (int i = 0; i < msh_num_builtins(); i++)
+    {
+        if (!strcmp(args[0], builtin_str[i]))
+        {
+            return builtin_func[i](args);
+        }
+    }
+
+    // otherwise launch process
+    return launch_proc(args);
 }
