@@ -15,7 +15,7 @@ int main(void)
 
     do
     {
-        printf("msh> ");
+        msh_printf(C_BLUE, "msh> ");
 
         if (read_input(input))
         {
@@ -28,6 +28,6 @@ int main(void)
         free(args);
     } while (!status);
 
-    printf("\n");
+    msh_printfln(C_GREEN, "See you next time :)");
     return 0;
 }

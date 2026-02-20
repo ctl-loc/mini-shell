@@ -3,6 +3,7 @@
 #include <stdlib.h>
 
 #include "builtin.h"
+#include "io.h"
 
 char *builtin_str[] = {
     "cd",
@@ -23,13 +24,13 @@ int msh_cd(char **args)
 {
     if (args[1] == NULL)
     {
-        fprintf(stderr, "msh: Command \"cd\" expect argument\n please use: cd [PATH]\n");
+        msh_printfln(C_RED, "msh: Command \"cd\" expect argument\n please use: cd [PATH]");
+        return 0;
     }
-    else
-    {
-        if (chdir(args[1]) != 0)
-            perror("msh");
-    }
+
+    if (chdir(args[1]) != 0)
+        perror("msh");
+
     return 0;
 }
 
@@ -37,31 +38,31 @@ int msh_help(char **args)
 {
     if (args[1] != NULL)
     {
-        printf("msh: Please use the help command alone\n");
-        printf("For non-builtin commands use the man page");
+        msh_printfln(C_RED, "msh: Please use the help command alone");
+        msh_printfln(C_RED, "For non-builtin commands use the man page");
         return 0;
     }
 
     int i;
-    printf("Mini-shell\n");
-    printf("Type program names and arguments, and hit enter.\n");
-    printf("The following are built in:\n");
+    msh_printfln(C_WHITE, "Mini-shell");
+    msh_printfln(C_WHITE, "Type program names and arguments, and hit enter.");
+    msh_printfln(C_WHITE, "The following are built in:");
 
     for (i = 0; i < msh_num_builtins(); i++)
     {
-        printf("  %s\n", builtin_str[i]);
+        msh_printfln(C_WHITE, "  %s", builtin_str[i]);
     }
 
-    printf("Use the man command for information on other programs.\n");
-    return 1;
+    msh_printfln(C_WHITE, "Use the man command for information on other programs.");
+    return 0;
 }
 
 int msh_exit(char **args)
 {
     if (args[1] != NULL)
     {
-        printf("msh: Please use the exit command alone\n");
+        msh_printfln(C_RED, "msh: Please use the exit command alone");
+        msh_printfln(C_RED, "I'll let it go this time...");
     }
-    exit(0);
-    return 0;
+    return 1;
 }

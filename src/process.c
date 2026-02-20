@@ -22,8 +22,7 @@ char **split_line(char *line, int *argc)
 
     if (!tokens)
     {
-        fprintf(stderr, "msh: allocation error\n");
-        // TODO return error
+        msh_printfln(C_RED, "msh: allocation error\n");
         exit(1);
     }
 
@@ -75,7 +74,7 @@ int launch_proc(char **args)
         {
             // wait for the child to finish
             wpid = waitpid(pid, &status, WUNTRACED);
-            printf("Process complete: %d\n", wpid);
+            msh_printfln(C_GREEN, "Process complete: %d", wpid);
         } while (!WIFEXITED(status) && !WIFSIGNALED(status)); // child exited normally or was killed by a signal
     }
     else
