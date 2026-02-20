@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <unistd.h>
+#include <stdlib.h>
 
 #include "builtin.h"
 
@@ -57,7 +58,10 @@ int msh_help(char **args)
 
 int msh_exit(char **args)
 {
-
-    printf("%s\n", args[0]);
+    if (args[1] != NULL)
+    {
+        printf("msh: Please use the exit command alone\n");
+    }
+    exit(0);
     return 0;
 }
