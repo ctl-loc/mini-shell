@@ -1,0 +1,26 @@
+name: Build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Build
+        run: |
+          mkdir build
+          gcc -O2 main.c -o build/msh
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: msh
+          path: build/msh*
