@@ -3,7 +3,7 @@ name: Build and Release
 on:
   push:
     branches:
-      - feature/cicd
+      - main
 
 jobs:
   build:
