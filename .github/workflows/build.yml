@@ -1,24 +1,28 @@
-name: Build
+name: Build and Release
 
 on:
   push:
-    branches: [feature/cicd]
-  pull_request:
-  workflow_dispatch:
+    branches:
+      - feature/cicd
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
-      - name: Checkout repo
+      - name: Checkout
         uses: actions/checkout@v4
 
       - name: Build
         run: make all
 
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
         with:
-          name: msh
-          path: bin/msh
+          tag_name: release-${{ github.sha }}
+          name: Release ${{ github.sha }}
+          files: bin/msh
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
