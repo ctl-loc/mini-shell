@@ -7,7 +7,7 @@ OUT = bin/msh
 
 DIRS = bin obj
 
-all: $(DIRS) $(OUT)
+all: clean $(DIRS) $(OUT)
 
 $(DIRS):
 	mkdir -p $@
