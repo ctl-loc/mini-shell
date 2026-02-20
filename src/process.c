@@ -84,7 +84,7 @@ int launch_proc(char **args)
         perror("msh");
     }
 
-    return 1;
+    return 0;
 }
 
 int execute(char **args)
